@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import Link from 'next/link';
-import { BiTrashAlt } from 'react-icons/Bi';
-import { BsPencil } from 'react-icons/Bs';
+import { BiTrashAlt } from 'react-icons/bi';
+import { BsPencil } from 'react-icons/bs';
 import { useTable } from 'react-table';
 
 import { Article } from '@/types/ArticlesType';

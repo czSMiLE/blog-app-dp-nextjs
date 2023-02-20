@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import formatTime from '@/utils/formatTime';
 
@@ -13,6 +13,16 @@ type RecentArticlesContentProps = {
 
 const RecentArticlesContent = ({ data }: RecentArticlesContentProps) => {
   const [images, setImages] = useState<Record<string, string>>({});
+
+  const sortedData = useMemo(
+    () =>
+      data.sort((a, b) => {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      }),
+    [data]
+  );
 
   const fetchImages = async (imageId: string) => {
     const response = await axios.get(
@@ -39,9 +49,8 @@ const RecentArticlesContent = ({ data }: RecentArticlesContentProps) => {
     <>
       <h1 className='font-2xl mb-16 font-medium'>Recent articles</h1>
       <div className='flex flex-col gap-8'>
-        {data.map((item) => {
+        {sortedData.map((item) => {
           const image = images[item.imageId];
-
           return (
             <div key={item.articleId} className='flex flex-row gap-4'>
               <div>
