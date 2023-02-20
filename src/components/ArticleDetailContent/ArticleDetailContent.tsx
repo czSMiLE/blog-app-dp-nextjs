@@ -24,7 +24,7 @@ const ArticleDetailContent = ({ data, image }: ArticleDetailContentProps) => {
         />
       )}
       <p className='mt-4 text-[#212529]'>{data.content}</p>
-      <p className='mt-4 text-[#212529]'>{data.content}</p>
+      
     </>
   );
 };
