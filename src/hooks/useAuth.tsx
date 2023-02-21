@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useContext, useState } from 'react';
+
+import api from '@/libs/api';
 
 import { LoginType } from '@/types/LoginType';
 
@@ -17,6 +18,8 @@ type AuthContextData = {
   children?: React.ReactNode;
 };
 
+type AuthResponse = { access_token: string; expires_in: number };
+
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -28,14 +31,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const logIn = async (formData: LoginType) => {
     try {
-      const { data } = await axios({
-        method: 'post',
+      const data = await api<AuthResponse>({
         url: `${process.env.NEXT_PUBLIC_API_URL}/login`,
-        data: JSON.stringify(formData),
-        headers: {
-          'X-API-KEY': process.env.NEXT_PUBLIC_TENANT_API_KEY,
-          'Content-Type': 'application/json',
-        },
+        method: 'POST',
+        data: formData,
       });
       if (data.access_token) {
         setCookie(null, 'access_token', data.access_token, {
@@ -48,15 +47,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         router.push('/admin');
       }
     } catch (error) {
-      if (
-        axios.isAxiosError(error) &&
-        (error.response?.status === 400 || error.response?.status === 401)
-      ) {
-        setError(true);
-      } else {
-        // eslint-disable-next-line no-console
-        console.log(error);
-      }
+      setError(true);
     }
   };
 

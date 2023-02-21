@@ -17,13 +17,13 @@ const AboutPage: NextPage = () => {
         </p>
         <div className='mt-1 flex flex-row gap-4'>
           <Link
-            className='text-[#2B7EFB] hover:underline'
+            className='text-primary-100 hover:underline'
             href='https://github.com/Applifting/fullstack-exercise'
           >
             Applifting task repository
           </Link>
           <Link
-            className='text-[#2B7EFB] hover:underline'
+            className='text-primary-100 hover:underline'
             href='https://github.com/czSMiLE/blog-app-dp-nextjs'
           >
             Source code

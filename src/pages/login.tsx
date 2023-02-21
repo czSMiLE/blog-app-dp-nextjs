@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/hooks/useAuth';
 
+import Input from '@/components/Input';
 import Seo from '@/components/Seo';
 
 import Layout from '@/layout/Layout';
@@ -27,31 +28,28 @@ const LoginPage: NextPage = () => {
       <main>
         <div className='mx-auto mt-16 w-96 rounded-lg p-8 shadow-lg'>
           <h1 className='text-3xl font-medium'>Log In</h1>
-          <form className='mt-6' onSubmit={handleSubmit(onSumbit)}>
-            <div className='flex flex-col gap-2'>
-              <label>Username</label>
-              <input
-                className='rounded border border-solid border-[#DFDFDF]'
-                type='text'
-                {...register('username', {
-                  required: true,
-                })}
-              />
-            </div>
-            <div className='mt-2 flex flex-col gap-2'>
-              <label>Password</label>
-              <input
-                className='rounded border border-solid border-[#DFDFDF]'
-                type='password'
-                {...register('password', {
-                  required: true,
-                })}
-              />
-            </div>
+          <form
+            className='mt-6 flex flex-col gap-2'
+            onSubmit={handleSubmit(onSumbit)}
+          >
+            <Input
+              label='Username'
+              type='text'
+              name='username'
+              register={register}
+              required
+            />
+            <Input
+              label='Password'
+              type='password'
+              name='password'
+              register={register}
+              required
+            />
             <div>
               <button
                 type='submit'
-                className='mt-4 rounded bg-[#007BFF] py-2 px-4 text-white'
+                className='mt-4 rounded bg-primary-50 py-2 px-4 text-white'
               >
                 Log In
               </button>

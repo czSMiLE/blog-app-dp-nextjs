@@ -10,8 +10,13 @@ module.exports = {
         primary: ['Inter', ...fontFamily.sans],
       },
       colors: {
-        primary: {},
-        dark: '#222222',
+        primary: {
+          50: '#007BFF',
+          100: '#2B7EFB',
+        },
+        borderGrey: '#DFDFDF',
+        mediumGrey: '#6C757D',
+        dark: '#212529',
       },
     },
   },

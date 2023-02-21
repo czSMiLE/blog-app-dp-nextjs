@@ -29,7 +29,7 @@ const HeaderLoggedIn = ({ logOut }: any) => {
               <li key={`${href}${label}`}>
                 <Link
                   href={href}
-                  className='text-[#6C757D] hover:text-gray-600'
+                  className='text-mediumGrey hover:text-gray-600'
                 >
                   {label}
                 </Link>
@@ -38,19 +38,19 @@ const HeaderLoggedIn = ({ logOut }: any) => {
           </ul>
         </nav>
         <div className='flex flex-row gap-10'>
-          <Link href='/admin' className='text-[#6C757D] hover:text-gray-600'>
+          <Link href='/admin' className='text-mediumGrey hover:text-gray-600'>
             My Articles
           </Link>
           <Link
             href='/admin/create-article'
-            className='flex flex-row items-center gap-2 font-normal text-[#2B7EFB] hover:underline'
+            className='flex flex-row items-center gap-2 font-normal text-primary-100 hover:underline'
           >
             Create Article
           </Link>
           <button
             type='button'
             onClick={logOut}
-            className='flex flex-row items-center gap-2 font-normal text-[#2B7EFB] hover:underline'
+            className='flex flex-row items-center gap-2 font-normal text-primary-100 hover:underline'
           >
             <span>Logout</span>
             <AiOutlineArrowRight />
@@ -74,7 +74,7 @@ const HeaderLoggedOut = () => {
               <li key={`${href}${label}`}>
                 <Link
                   href={href}
-                  className='text-[#6C757D] hover:text-gray-600'
+                  className='text-mediumGrey hover:text-gray-600'
                 >
                   {label}
                 </Link>
@@ -85,7 +85,7 @@ const HeaderLoggedOut = () => {
         <div>
           <Link
             href='/login'
-            className='flex flex-row items-center gap-2 font-normal text-[#2B7EFB] hover:underline'
+            className='flex flex-row items-center gap-2 font-normal text-primary-100 hover:underline'
           >
             <span>Login</span>
             <AiOutlineArrowRight />

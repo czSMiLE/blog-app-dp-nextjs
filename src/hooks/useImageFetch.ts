@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+
+import api from '@/libs/api';
 
 type UseImageFetchProps = {
   imageId: string;
@@ -17,20 +18,14 @@ const useImageFetch = ({
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/images/${imageId}`,
-          {
-            headers: {
-              'X-API-KEY': process.env.NEXT_PUBLIC_TENANT_API_KEY,
-            },
-            responseType: 'arraybuffer',
-          }
-        );
+        const imageData = await api<ArrayBuffer>({
+          url: `${process.env.NEXT_PUBLIC_API_URL}/images/${imageId}`,
+          method: 'GET',
+          responseType: 'arraybuffer',
+        });
 
-        const imageData = Buffer.from(response.data, 'binary').toString(
-          'base64'
-        );
-        setImage(imageData);
+        const imageDataUrl = Buffer.from(imageData).toString('base64');
+        setImage(imageDataUrl);
       } catch (error: any) {
         throw new Error(error);
       }

@@ -1,25 +1,17 @@
-import axios from 'axios';
+import api from '@/libs/api';
 
 import { Article } from '@/types/ArticlesType';
 
-async function fetchArticles(): Promise<Article[]> {
-  try {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/articles`,
-      {
-        headers: {
-          'X-API-KEY': process.env.NEXT_PUBLIC_TENANT_API_KEY,
-        },
-      }
-    );
+type ArticlesResponse = {
+  items: Article[];
+};
 
-    return data?.items ?? [];
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 404) {
-      throw new Error('Page not found');
-    }
-    throw error;
-  }
-}
+const fetchArticles = async (): Promise<ArticlesResponse> => {
+  const articles = await api<ArticlesResponse>({
+    url: `${process.env.NEXT_PUBLIC_API_URL}/articles`,
+    method: 'GET',
+  });
+  return articles;
+};
 
 export default fetchArticles;

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { useArticles } from '@/hooks/useArticles';
 import useDeleteArticle from '@/hooks/useDeleteArticle';
+import { useGetArticles } from '@/hooks/useGetArticles';
 
 import AdminArticlesTable from '@/components/AdminArticlesTable/AdminArticlesTable';
 import columns from '@/components/AdminArticlesTable/columns';
@@ -11,7 +11,7 @@ import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
 import Layout from '@/layout/Layout';
 
 const Dashboard = () => {
-  const { data } = useArticles();
+  const { data } = useGetArticles();
 
   const { status, deleteArticle } = useDeleteArticle();
 
@@ -25,7 +25,7 @@ const Dashboard = () => {
       <div className='my-8 flex flex-row items-center gap-8'>
         <h1 className='font-2xl font-medium'>My articles</h1>
         <Link
-          className='rounded bg-[#007BFF] p-4 text-white'
+          className='rounded bg-primary-50 p-4 text-white'
           href='/admin/create-article'
         >
           Create new article

@@ -23,7 +23,7 @@ const AdminArticlesTable = ({
 
   return (
     <table {...getTableProps()} className='w-full '>
-      <thead className='mb-2 border-b border-[#DFDFDF] text-left'>
+      <thead className='mb-2 border-b border-borderGrey text-left'>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (

@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 
 import usePostArticle from '@/hooks/usePostArticle';
 
+import Input from '@/components/Input';
 import Seo from '@/components/Seo';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
@@ -28,36 +29,35 @@ const CreateArticle = () => {
       <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
         <div className='mt-8 mb-4 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Create new article</h1>
-          <button type='submit' className='rounded bg-[#007BFF] p-4 text-white'>
+          <button
+            type='submit'
+            className='rounded bg-primary-50 p-4 text-white'
+          >
             Publish article
           </button>
         </div>
         <div className='flex flex-col gap-8'>
-          <div className='flex flex-col gap-2'>
-            <label htmlFor='title'>Article Title</label>
-            <input
-              id='title'
-              {...register('title', {
-                required: true,
-              })}
-              placeholder='My First Article'
-              className='rounded border border-[#DFDFDF] p-4'
-            />
-          </div>
-          <div className='flex flex-col gap-2'>
-            <label htmlFor='perex'>Description</label>
-            <input
-              id='perex'
-              {...register('perex', {
-                required: true,
-              })}
-              placeholder='Perex'
-              className='rounded border border-[#DFDFDF] p-4'
-            />
-          </div>
+          <Input
+            label='Article Title'
+            type='text'
+            name='title'
+            register={register}
+            required
+            className='p-4'
+            placeholder='My First Article'
+          />
+          <Input
+            label='Description'
+            type='text'
+            name='perex'
+            required
+            register={register}
+            className='p-4'
+            placeholder='Perex'
+          />
           <div className='flex w-36 flex-col gap-2'>
             <label
-              className='rounded bg-[#6C757D] px-3 py-2 text-white hover:cursor-pointer'
+              className='rounded bg-mediumGrey px-3 py-2 text-white hover:cursor-pointer'
               htmlFor='imageId'
             >
               Upload Image
@@ -79,7 +79,7 @@ const CreateArticle = () => {
               {...register('content', {
                 required: true,
               })}
-              className='rounded border border-[#DFDFDF] p-4'
+              className='rounded border border-borderGrey p-4'
               placeholder='Enter content'
             ></textarea>
           </div>

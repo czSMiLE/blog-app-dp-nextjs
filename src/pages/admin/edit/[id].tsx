@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import fetchArticle from '@/libs/fetchArticle';
+import { useGetArticle } from '@/hooks/useGetArticle';
 import useUpdateArticle from '@/hooks/useUpdateArticle';
 
+import Input from '@/components/Input';
 import Seo from '@/components/Seo';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
@@ -14,25 +15,9 @@ import { ArticleDetail } from '@/types/ArticleDetailType';
 
 const ArticleEditPage = () => {
   const router = useRouter();
-  const [data, setData] = useState<ArticleDetail>();
-  const { register, handleSubmit, setValue } = useForm();
-
   const articleId = router.query.id;
-
-  useEffect(() => {
-    const getArticle = async () => {
-      try {
-        const article = await fetchArticle(articleId as string);
-        setData(article);
-      } catch (error: any) {
-        throw new Error(error);
-      }
-    };
-
-    if (articleId) {
-      getArticle();
-    }
-  }, [articleId]);
+  const { data } = useGetArticle(articleId);
+  const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
     if (data) {
@@ -54,33 +39,30 @@ const ArticleEditPage = () => {
       <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
         <div className='mt-8 mb-4 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Edit article</h1>
-          <button type='submit' className='rounded bg-[#007BFF] p-4 text-white'>
+          <button
+            type='submit'
+            className='rounded bg-primary-50 p-4 text-white'
+          >
             Publish article
           </button>
         </div>
         <div className='flex flex-col gap-8'>
-          <div className='flex flex-col gap-2'>
-            <label htmlFor='title'>Article Title</label>
-            <input
-              id='title'
-              {...register('title', {
-                required: true,
-              })}
-              placeholder='My First Article'
-              className='rounded border border-[#DFDFDF] p-4'
-            />
-          </div>
-          <div className='flex flex-col gap-2'>
-            <label htmlFor='perex'>Description</label>
-            <input
-              id='perex'
-              {...register('perex', {
-                required: true,
-              })}
-              placeholder='Perex'
-              className='rounded border border-[#DFDFDF] p-4'
-            />
-          </div>
+          <Input
+            label='Article Title'
+            type='text'
+            name='title'
+            register={register}
+            className='p-4'
+            placeholder='My First Article'
+          />
+          <Input
+            label='Description'
+            type='text'
+            name='perex'
+            register={register}
+            className='p-4'
+            placeholder='Perex'
+          />
           <div className='flex flex-col gap-2'>
             <label htmlFor='content'>Content</label>
             <textarea
@@ -88,7 +70,7 @@ const ArticleEditPage = () => {
               {...register('content', {
                 required: true,
               })}
-              className='rounded border border-[#DFDFDF] p-4'
+              className='rounded border border-borderGrey p-4'
               placeholder='Enter content'
             ></textarea>
           </div>
