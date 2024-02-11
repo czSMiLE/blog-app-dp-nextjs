@@ -1,11 +1,10 @@
-import { NextPage } from 'next';
 import Link from 'next/link';
 
 import { Seo } from '@/components';
 
 import { Layout } from '@/layout';
 
-const AboutPage: NextPage = () => {
+const AboutPage = () => {
   return (
     <Layout>
       <Seo templateTitle='About page' />
@@ -33,7 +32,5 @@ const AboutPage: NextPage = () => {
     </Layout>
   );
 };
-
-AboutPage.displayName = 'AboutPage';
 
 export default AboutPage;

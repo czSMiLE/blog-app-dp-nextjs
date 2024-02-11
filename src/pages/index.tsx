@@ -1,9 +1,8 @@
 import { GetServerSideProps } from 'next';
 
-import fetchArticles from '@/libs/fetchArticles';
-
 import { RecentArticles, Seo } from '@/components';
 
+import { listArticles } from '@/api';
 import { Layout } from '@/layout';
 
 import { Article } from '@/types/ArticlesType';
@@ -26,7 +25,7 @@ const HomePage = ({ data }: HomePageProps) => {
 export const getServerSideProps: GetServerSideProps<
   HomePageProps
 > = async () => {
-  const data = await fetchArticles();
+  const data = await listArticles();
 
   return {
     props: {

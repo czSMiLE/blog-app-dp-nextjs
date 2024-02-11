@@ -1,10 +1,10 @@
 import { GetServerSideProps } from 'next';
 
-import fetchArticle from '@/libs/fetchArticle';
 import useImageFetch from '@/hooks/useImageFetch';
 
 import { ArticleDetailContent, Seo } from '@/components';
 
+import { getArticleDetail } from '@/api';
 import { Layout } from '@/layout';
 
 import { ArticleDetail } from '@/types/ArticleDetailType';
@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  const data = await fetchArticle(params?.id);
+  const data = await getArticleDetail(params?.id);
 
   return {
     props: {
@@ -42,7 +42,5 @@ export const getServerSideProps: GetServerSideProps<
     },
   };
 };
-
-ArticlesDetailPage.displayName = 'ArticlesDetailPage';
 
 export default ArticlesDetailPage;

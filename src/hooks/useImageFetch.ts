@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import api from '@/libs/api';
+import { fetchImage } from '@/api';
 
 type UseImageFetchProps = {
   imageId: string;
@@ -16,21 +16,18 @@ const useImageFetch = ({
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchAndSetImage = async () => {
       try {
-        const imageData = await api<ArrayBuffer>({
-          url: `${process.env.NEXT_PUBLIC_API_URL}/images/${imageId}`,
-          method: 'GET',
-          responseType: 'arraybuffer',
-        });
-
-        const imageDataUrl = Buffer.from(imageData).toString('base64');
+        const imageDataUrl = await fetchImage(imageId);
         setImage(imageDataUrl);
-      } catch (error: any) {
-        throw new Error(error);
+      } catch (error) {
+        throw new Error(`Error fetching image: ${error}`);
       }
     };
-    fetchImages();
+
+    if (imageId) {
+      fetchAndSetImage();
+    }
   }, [imageId]);
 
   return { image };

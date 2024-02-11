@@ -1,11 +1,10 @@
-import { GetServerSideProps, NextPage } from 'next';
+import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/hooks';
 
-import { Input } from '@/components';
-import { Seo } from '@/components';
+import { Input, Seo } from '@/components';
 
 import { Layout } from '@/layout';
 
@@ -14,7 +13,7 @@ type FormData = {
   password: string;
 };
 
-const LoginPage: NextPage = () => {
+const LoginPage = () => {
   const { logIn, error } = useAuth();
   const { register, handleSubmit } = useForm<FormData>();
 

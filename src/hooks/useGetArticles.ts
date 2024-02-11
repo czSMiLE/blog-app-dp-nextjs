@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import fetchArticles from '@/libs/fetchArticles';
+import { listArticles } from '@/api';
 
 import { Article } from '@/types/ArticlesType';
 
@@ -9,7 +9,7 @@ export const useGetArticles = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchArticles();
+      const data = await listArticles();
       setData(data.items);
     };
 

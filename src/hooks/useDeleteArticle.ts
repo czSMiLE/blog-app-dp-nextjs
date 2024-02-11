@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
 import { useState } from 'react';
 
-import api from '@/libs/api';
+import { deleteArticle as deleteArticleService } from '@/api';
 
 type DeleteArticleStatus = {
   success: boolean;
@@ -15,21 +14,10 @@ const useDeleteArticle = () => {
     error: false,
   });
   const router = useRouter();
-  const { access_token } = parseCookies();
 
   const deleteArticle = async (articleId: string | string[] | undefined) => {
     try {
-      await api({
-        url: `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
-        method: 'DELETE',
-        headers: {
-          Authorization: access_token,
-          'Content-Type': 'application/json',
-        },
-        data: {
-          articleId: articleId,
-        },
-      });
+      await deleteArticleService(articleId as string);
 
       setStatus({ success: true, error: false });
       router.reload();

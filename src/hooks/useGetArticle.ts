@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import fetchArticle from '@/libs/fetchArticle';
+import { getArticleDetail } from '@/api';
 
 import { ArticleDetail } from '@/types/ArticleDetailType';
 
@@ -9,7 +9,7 @@ export const useGetArticle = (articleId: string | string[] | undefined) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchArticle(articleId as string);
+      const data = await getArticleDetail(articleId as string);
       setData(data);
     };
 

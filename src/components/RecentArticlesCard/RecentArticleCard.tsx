@@ -12,7 +12,7 @@ export const RecentArticleCard: FC<IRecentArticleCardProps> = ({ article }) => {
   const { image } = useImageFetch({ imageId: article.imageId });
 
   return (
-    <div key={article.articleId} className='flex flex-row gap-4'>
+    <div className='flex flex-row gap-4'>
       <div>
         {image && (
           <Image

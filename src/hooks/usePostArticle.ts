@@ -13,7 +13,7 @@ type PostArticleStatus = {
   error: boolean;
 };
 
-type UploadResponse = { imageId: string }[];
+export type UploadResponse = { imageId: string }[];
 
 const usePostArticle = () => {
   const [status, setStatus] = useState<PostArticleStatus>({
@@ -56,6 +56,12 @@ const usePostArticle = () => {
           'Content-Type': 'application/json',
         },
       });
+
+      // await createArticle(formDataUpload, {
+      // title: formData.title,
+      //perex: formData.perex,
+      //content: formData.content,
+      //});
 
       setStatus({ success: true, error: false });
       return;
