@@ -3,14 +3,9 @@ import { FC } from 'react';
 
 import { useAuth } from '@/hooks';
 
-import { HeaderLoggedIn, HeaderLoggedOut } from '@/layout/components';
+import { HeaderLoggedIn, HeaderLoggedOut, links } from '@/layout/components';
 
 import Logo from '~/images/logo.svg';
-
-const links = [
-  { href: '/', label: 'Recent Articles' },
-  { href: '/about', label: 'About' },
-];
 
 export const Header: FC = () => {
   const { user, logOut } = useAuth();

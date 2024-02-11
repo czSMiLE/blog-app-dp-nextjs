@@ -8,7 +8,7 @@ import useUpdateArticle from '@/hooks/useUpdateArticle';
 import { Input } from '@/components';
 import { Seo } from '@/components';
 
-import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
+import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
 
 import { ArticleDetail } from '@/types/ArticleDetailType';

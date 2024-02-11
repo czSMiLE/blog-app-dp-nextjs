@@ -5,7 +5,7 @@ import { useGetArticles } from '@/hooks/useGetArticles';
 
 import { AdminArticlesTable, columns, Seo } from '@/components';
 
-import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
+import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
 
 const Dashboard = () => {

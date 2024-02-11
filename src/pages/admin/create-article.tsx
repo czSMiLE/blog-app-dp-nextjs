@@ -5,7 +5,7 @@ import usePostArticle from '@/hooks/usePostArticle';
 import { Input } from '@/components';
 import { Seo } from '@/components';
 
-import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
+import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
 
 type FormData = {

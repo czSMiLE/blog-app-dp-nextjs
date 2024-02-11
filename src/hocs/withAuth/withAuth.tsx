@@ -2,9 +2,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 
-type WithAuthProps = {
-  isAuth: boolean;
-};
+import { IWithAuthProps } from '@/hocs';
 
 /**
  * Higher-order component that redirects to the login page if the user is not authenticated.
@@ -13,7 +11,7 @@ type WithAuthProps = {
  */
 
 export const withAuth = (Page: React.ComponentType<any>) => {
-  const WithAuth = ({ isAuth, ...pageProps }: WithAuthProps) => {
+  const WithAuth = ({ isAuth, ...pageProps }: IWithAuthProps) => {
     const router = useRouter();
 
     if (!isAuth) {
