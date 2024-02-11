@@ -15,7 +15,6 @@ export const Header: FC = () => {
     <header className='sticky top-0 z-50 bg-[#F8F9FA]' role='banner'>
       <div className='layout flex h-14 items-center justify-between'>
         <HeaderLinks />
-
         {user ? <HeaderLoggedIn logOut={logOut} /> : <HeaderLoggedOut />}
       </div>
     </header>
