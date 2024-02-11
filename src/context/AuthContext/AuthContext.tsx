@@ -1,26 +1,14 @@
 import { useRouter } from 'next/router';
 import { destroyCookie, setCookie } from 'nookies';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 import api from '@/libs/api';
 
-import { LoginType } from '@/types/LoginType';
+import { AuthContextData, AuthResponse, LoginType, User } from '@/context';
 
-type User = {
-  username: string;
-};
-
-type AuthContextData = {
-  user: User | null;
-  logIn: (formData: LoginType) => Promise<void>;
-  logOut: () => void;
-  error: boolean;
-  children?: React.ReactNode;
-};
-
-type AuthResponse = { access_token: string; expires_in: number };
-
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+export const AuthContext = createContext<AuthContextData>(
+  {} as AuthContextData
+);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -66,14 +54,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = (): AuthContextData => {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-
-  return context;
 };

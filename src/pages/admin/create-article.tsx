@@ -2,11 +2,11 @@ import { useForm } from 'react-hook-form';
 
 import usePostArticle from '@/hooks/usePostArticle';
 
-import Input from '@/components/Input';
-import Seo from '@/components/Seo';
+import { Input } from '@/components';
+import { Seo } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
-import Layout from '@/layout/Layout';
+import { Layout } from '@/layout';
 
 type FormData = {
   title: string;
@@ -27,7 +27,7 @@ const CreateArticle = () => {
     <Layout>
       <Seo templateTitle='Admin panel - New article' />
       <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
-        <div className='mt-8 mb-4 flex flex-row items-center gap-8'>
+        <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Create new article</h1>
           <button
             type='submit'

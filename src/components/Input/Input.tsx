@@ -10,7 +10,7 @@ type InputProps = {
   className?: string;
 };
 
-const Input = ({
+export const Input = ({
   label,
   type,
   name,
@@ -35,6 +35,3 @@ const Input = ({
     </div>
   );
 };
-
-Input.displayName = 'Input';
-export default Input;

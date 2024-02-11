@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import formatTime from '@/utils/formatTime';
+import { formatTime } from '@/utils';
 
 import { ArticleDetail } from '@/types/ArticleDetailType';
 
@@ -12,7 +12,7 @@ type ArticleDetailContentProps = {
 const ArticleDetailContent = ({ data, image }: ArticleDetailContentProps) => {
   return (
     <>
-      <h1 className='font-2xl mt-8 mb-4 font-medium'>{data.title}</h1>
+      <h1 className='font-2xl mb-4 mt-8 font-medium'>{data.title}</h1>
       <p className='mb-4 text-mediumGrey'>{formatTime(data.createdAt)}</p>
 
       {image && (

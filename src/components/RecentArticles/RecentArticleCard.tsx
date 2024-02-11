@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import useImageFetch from '@/hooks/useImageFetch';
 
-import formatTime from '@/utils/formatTime';
+import { formatTime } from '@/utils';
 
 import { Article } from '@/types/ArticlesType';
 

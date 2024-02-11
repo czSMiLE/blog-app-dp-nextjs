@@ -2,10 +2,10 @@ import { GetServerSideProps } from 'next';
 
 import fetchArticles from '@/libs/fetchArticles';
 
+import { Seo } from '@/components';
 import RecentArticles from '@/components/RecentArticles/RecentArticles';
-import Seo from '@/components/Seo';
 
-import Layout from '@/layout/Layout';
+import { Layout } from '@/layout';
 
 import { Article } from '@/types/ArticlesType';
 

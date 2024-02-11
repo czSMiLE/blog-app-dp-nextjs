@@ -2,12 +2,12 @@ import { GetServerSideProps, NextPage } from 'next';
 import { parseCookies } from 'nookies';
 import { useForm } from 'react-hook-form';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 
-import Input from '@/components/Input';
-import Seo from '@/components/Seo';
+import { Input } from '@/components';
+import { Seo } from '@/components';
 
-import Layout from '@/layout/Layout';
+import { Layout } from '@/layout';
 
 type FormData = {
   username: string;
@@ -49,7 +49,7 @@ const LoginPage: NextPage = () => {
             <div>
               <button
                 type='submit'
-                className='mt-4 rounded bg-primary-50 py-2 px-4 text-white'
+                className='mt-4 rounded bg-primary-50 px-4 py-2 text-white'
               >
                 Log In
               </button>

@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form';
 import { useGetArticle } from '@/hooks/useGetArticle';
 import useUpdateArticle from '@/hooks/useUpdateArticle';
 
-import Input from '@/components/Input';
-import Seo from '@/components/Seo';
+import { Input } from '@/components';
+import { Seo } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
-import Layout from '@/layout/Layout';
+import { Layout } from '@/layout';
 
 import { ArticleDetail } from '@/types/ArticleDetailType';
 
@@ -37,7 +37,7 @@ const ArticleEditPage = () => {
     <Layout>
       <Seo templateTitle='Admin panel - Edit article' />
       <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
-        <div className='mt-8 mb-4 flex flex-row items-center gap-8'>
+        <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Edit article</h1>
           <button
             type='submit'

@@ -2,9 +2,9 @@ import Link from 'next/link';
 import * as React from 'react';
 import { RiAlarmWarningFill } from 'react-icons/ri';
 
-import Seo from '@/components/Seo';
+import { Seo } from '@/components';
 
-import Layout from '@/layout/Layout';
+import { Layout } from '@/layout';
 
 export default function NotFoundPage() {
   return (
