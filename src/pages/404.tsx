@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import { RiAlarmWarningFill } from 'react-icons/ri';
 
-import { Seo } from '@/components';
-
 import { Layout } from '@/layout';
 
 const NotFoundPage = () => {
   return (
-    <Layout>
-      <Seo templateTitle='Not Found' />
+    <Layout seoProps={{ templateTitle: 'Not Found' }}>
       <main>
         <section className='bg-white' aria-label='Page Not Found'>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center text-black'>

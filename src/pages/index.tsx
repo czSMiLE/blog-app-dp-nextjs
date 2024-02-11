@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 
-import { RecentArticles, Seo } from '@/components';
+import { RecentArticles } from '@/components';
 
 import { listArticles } from '@/api';
 import { Layout } from '@/layout';
@@ -13,8 +13,7 @@ type HomePageProps = {
 
 const HomePage = ({ data }: HomePageProps) => {
   return (
-    <Layout>
-      <Seo templateTitle='Recent articles' />
+    <Layout seoProps={{ templateTitle: 'Recent articles' }}>
       <div className='my-16'>
         <RecentArticles data={data} />
       </div>

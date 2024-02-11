@@ -1,13 +1,10 @@
 import Link from 'next/link';
 
-import { Seo } from '@/components';
-
 import { Layout } from '@/layout';
 
 const AboutPage = () => {
   return (
-    <Layout>
-      <Seo templateTitle='About page' />
+    <Layout seoProps={{ templateTitle: 'About page' }}>
       <div>
         <h1 className='font-2xl mb-4 mt-8 font-medium'>About this project</h1>
         <p>

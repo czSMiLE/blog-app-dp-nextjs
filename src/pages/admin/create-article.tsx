@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import usePostArticle from '@/hooks/usePostArticle';
 
 import { Input } from '@/components';
-import { Seo } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
@@ -24,8 +23,7 @@ const CreateArticle = () => {
   };
 
   return (
-    <Layout>
-      <Seo templateTitle='Admin panel - New article' />
+    <Layout seoProps={{ templateTitle: 'Admin panel - New article' }}>
       <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
         <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Create new article</h1>

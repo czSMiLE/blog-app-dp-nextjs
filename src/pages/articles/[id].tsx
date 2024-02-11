@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 
 import useImageFetch from '@/hooks/useImageFetch';
 
-import { ArticleDetailContent, Seo } from '@/components';
+import { ArticleDetailContent } from '@/components';
 
 import { getArticleDetail } from '@/api';
 import { Layout } from '@/layout';
@@ -15,8 +15,7 @@ const ArticlesDetailPage = ({ data }: ArticlesDetailPageProps) => {
   const { image } = useImageFetch({ imageId: data.imageId });
 
   return (
-    <Layout>
-      <Seo templateTitle={data.title} description={data.perex} />
+    <Layout seoProps={{ templateTitle: data.title, description: data.perex }}>
       <div className='mb-16'>
         <ArticleDetailContent data={data} image={image} />
       </div>

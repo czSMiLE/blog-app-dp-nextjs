@@ -6,7 +6,6 @@ import { useGetArticle } from '@/hooks/useGetArticle';
 import useUpdateArticle from '@/hooks/useUpdateArticle';
 
 import { Input } from '@/components';
-import { Seo } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
@@ -34,8 +33,7 @@ const ArticleEditPage = () => {
   };
 
   return (
-    <Layout>
-      <Seo templateTitle='Admin panel - Edit article' />
+    <Layout seoProps={{ templateTitle: 'Admin panel - Edit article' }}>
       <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
         <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Edit article</h1>

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useAuth } from '@/hooks';
 
-import { Input, Seo } from '@/components';
+import { Input } from '@/components';
 
 import { Layout } from '@/layout';
 
@@ -22,8 +22,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Layout>
-      <Seo templateTitle='Login page' />
+    <Layout seoProps={{ templateTitle: 'Login page' }}>
       <main>
         <div className='mx-auto mt-16 w-96 rounded-lg p-8 shadow-lg'>
           <h1 className='text-3xl font-medium'>Log In</h1>

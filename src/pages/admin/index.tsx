@@ -3,7 +3,7 @@ import Link from 'next/link';
 import useDeleteArticle from '@/hooks/useDeleteArticle';
 import { useGetArticles } from '@/hooks/useGetArticles';
 
-import { AdminArticlesTable, columns, Seo } from '@/components';
+import { AdminArticlesTable, columns } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
@@ -18,8 +18,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Layout>
-      <Seo templateTitle='Admin panel - My articles' />
+    <Layout seoProps={{ templateTitle: 'Admin panel - My articles' }}>
       <div className='my-8 flex flex-row items-center gap-8'>
         <h1 className='font-2xl font-medium'>My articles</h1>
         <Link
