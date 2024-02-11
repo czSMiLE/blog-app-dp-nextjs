@@ -3,8 +3,7 @@ import { GetServerSideProps } from 'next';
 import fetchArticle from '@/libs/fetchArticle';
 import useImageFetch from '@/hooks/useImageFetch';
 
-import { Seo } from '@/components';
-import ArticleDetailContent from '@/components/ArticleDetailContent/ArticleDetailContent';
+import { ArticleDetailContent, Seo } from '@/components';
 
 import { Layout } from '@/layout';
 

@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { withSentryConfig } = require('@sentry/nextjs');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -37,8 +40,5 @@ function extendWebpackConfig(config) {
 
   return config;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);

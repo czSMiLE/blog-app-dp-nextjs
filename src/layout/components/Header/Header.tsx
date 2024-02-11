@@ -3,8 +3,9 @@ import { FC } from 'react';
 
 import { useAuth } from '@/hooks';
 
-import Logo from '@/../public/svg/logo.svg';
 import { HeaderLoggedIn, HeaderLoggedOut } from '@/layout/components';
+
+import Logo from '~/images/logo.svg';
 
 const links = [
   { href: '/', label: 'Recent Articles' },

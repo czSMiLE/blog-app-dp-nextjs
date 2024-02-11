@@ -1,4 +1,4 @@
-const columns = [
+export const columns = [
   {
     Header: 'Article title',
     accessor: 'title',
@@ -7,6 +7,6 @@ const columns = [
     Header: 'Perex',
     accessor: 'perex',
   },
-];
+] as const;
 
-export default columns;
+export type ColumnsType = typeof columns;

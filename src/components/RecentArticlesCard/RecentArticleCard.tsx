@@ -1,17 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { FC } from 'react';
 
 import useImageFetch from '@/hooks/useImageFetch';
 
+import { IRecentArticleCardProps } from '@/components';
+
 import { formatTime } from '@/utils';
 
-import { Article } from '@/types/ArticlesType';
-
-type RecentArticleCardProps = {
-  article: Article;
-};
-
-const RecentArticleCard = ({ article }: RecentArticleCardProps) => {
+export const RecentArticleCard: FC<IRecentArticleCardProps> = ({ article }) => {
   const { image } = useImageFetch({ imageId: article.imageId });
 
   return (
@@ -33,6 +30,7 @@ const RecentArticleCard = ({ article }: RecentArticleCardProps) => {
         <Link
           className='text-primary-100 hover:underline'
           href={`/articles/${article.articleId}`}
+          aria-label={`Read whole article about ${article.title}`}
         >
           Read whole article
         </Link>
@@ -40,7 +38,3 @@ const RecentArticleCard = ({ article }: RecentArticleCardProps) => {
     </div>
   );
 };
-
-RecentArticleCard.displayName = 'RecentArticleCard';
-
-export default RecentArticleCard;

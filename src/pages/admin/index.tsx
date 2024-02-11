@@ -3,9 +3,7 @@ import Link from 'next/link';
 import useDeleteArticle from '@/hooks/useDeleteArticle';
 import { useGetArticles } from '@/hooks/useGetArticles';
 
-import { Seo } from '@/components';
-import AdminArticlesTable from '@/components/AdminArticlesTable/AdminArticlesTable';
-import columns from '@/components/AdminArticlesTable/columns';
+import { AdminArticlesTable, columns, Seo } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
 import { Layout } from '@/layout';

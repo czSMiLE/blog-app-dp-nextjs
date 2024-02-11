@@ -10,12 +10,13 @@ const defaultMeta = {
   robots: 'follow, index',
 };
 
-type SeoProps = {
+type DefaultMeta = typeof defaultMeta;
+export interface ISeoProps extends Partial<DefaultMeta> {
   date?: string;
   templateTitle?: string;
-} & Partial<typeof defaultMeta>;
+}
 
-export const Seo = (props: SeoProps) => {
+export const Seo = (props: ISeoProps) => {
   const router = useRouter();
   const meta = {
     ...defaultMeta,

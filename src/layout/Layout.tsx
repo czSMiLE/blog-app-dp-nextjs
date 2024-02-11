@@ -6,7 +6,9 @@ export const Layout: FC<ILayoutProps> = ({ children }) => {
   return (
     <div className='flex min-h-screen flex-col'>
       <Header />
-      <main className='layout'>{children}</main>
+      <main role='main' className='layout'>
+        {children}
+      </main>
     </div>
   );
 };

@@ -1,15 +1,14 @@
 import Image from 'next/image';
+import { FC } from 'react';
+
+import { IArticleDetailContentProps } from '@/components';
 
 import { formatTime } from '@/utils';
 
-import { ArticleDetail } from '@/types/ArticleDetailType';
-
-type ArticleDetailContentProps = {
-  data: ArticleDetail;
-  image: string | null;
-};
-
-const ArticleDetailContent = ({ data, image }: ArticleDetailContentProps) => {
+export const ArticleDetailContent: FC<IArticleDetailContentProps> = ({
+  data,
+  image,
+}) => {
   return (
     <>
       <h1 className='font-2xl mb-4 mt-8 font-medium'>{data.title}</h1>
@@ -27,7 +26,3 @@ const ArticleDetailContent = ({ data, image }: ArticleDetailContentProps) => {
     </>
   );
 };
-
-ArticleDetailContent.displayName = 'ArticleDetailContent';
-
-export default ArticleDetailContent;

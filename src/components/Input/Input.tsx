@@ -1,16 +1,10 @@
-import clsx from 'clsx';
+import { FC } from 'react';
 
-type InputProps = {
-  label: string;
-  type: string;
-  name: string;
-  register: any;
-  placeholder?: string;
-  required?: boolean;
-  className?: string;
-};
+import { InputProps } from '@/components';
 
-export const Input = ({
+import { cn } from '@/utils';
+
+export const Input: FC<InputProps> = ({
   label,
   type,
   name,
@@ -18,18 +12,19 @@ export const Input = ({
   className,
   required,
   placeholder,
-}: InputProps) => {
+}) => {
   return (
     <div className='flex flex-col gap-2'>
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
-        className={clsx(
+        className={cn(
           'rounded border border-solid border-borderGrey',
           className
         )}
         type={type}
         placeholder={placeholder}
+        aria-required={required ? true : undefined}
         {...register(name, { required })}
       />
     </div>

@@ -9,7 +9,7 @@ export const HeaderLoggedIn: FC<IHeaderLoggedInProps> = ({ logOut }) => {
     <div
       className='flex flex-row gap-10'
       role='navigation'
-      aria-label='Main navigation'
+      aria-label='Admin panel navigation'
     >
       <Link
         href='/admin'
