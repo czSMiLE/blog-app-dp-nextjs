@@ -1,10 +1,17 @@
-import Header from '@/layout/Header';
+import { FC } from 'react';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+import { Seo } from '@/components';
+
+import { Header, ILayoutProps } from '@/layout';
+
+export const Layout: FC<ILayoutProps> = ({ children, seoProps }) => {
   return (
     <div className='flex min-h-screen flex-col'>
       <Header />
-      <main className='layout'>{children}</main>
+      <Seo {...seoProps} />
+      <main role='main' className='layout'>
+        {children}
+      </main>
     </div>
   );
-}
+};

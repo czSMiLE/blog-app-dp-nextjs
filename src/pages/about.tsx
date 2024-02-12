@@ -1,16 +1,12 @@
-import { NextPage } from 'next';
 import Link from 'next/link';
 
-import Seo from '@/components/Seo';
+import { Layout } from '@/layout';
 
-import Layout from '@/layout/Layout';
-
-const AboutPage: NextPage = () => {
+const AboutPage = () => {
   return (
-    <Layout>
-      <Seo templateTitle='About page' />
+    <Layout seoProps={{ templateTitle: 'About page' }}>
       <div>
-        <h1 className='font-2xl mt-8 mb-4 font-medium'>About this project</h1>
+        <h1 className='font-2xl mb-4 mt-8 font-medium'>About this project</h1>
         <p>
           This project is a Next.js (React) blog page made with TypeScript,
           Tailwind CSS, ESLint, Prettier, and Husky.
@@ -33,7 +29,5 @@ const AboutPage: NextPage = () => {
     </Layout>
   );
 };
-
-AboutPage.displayName = 'AboutPage';
 
 export default AboutPage;

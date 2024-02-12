@@ -1,49 +1,61 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
-import fetchArticle from '@/libs/fetchArticle';
-import useImageFetch from '@/hooks/useImageFetch';
+import { useImageFetch } from '@/hooks';
 
-import ArticleDetailContent from '@/components/ArticleDetailContent/ArticleDetailContent';
-import Seo from '@/components/Seo';
+import { ArticleDetail } from '@/components';
 
-import Layout from '@/layout/Layout';
+import { ArticlesAPI } from '@/api';
+import { Layout } from '@/layout';
 
-import { ArticleDetail } from '@/types/ArticleDetailType';
+import { ArticleDetailType } from '@/types';
 
-type ArticlesDetailPageProps = { data: ArticleDetail };
+interface IArticlesDetailPageProps {
+  data: ArticleDetailType;
+}
 
-const ArticlesDetailPage = ({ data }: ArticlesDetailPageProps) => {
+const ArticlesDetailPage = ({ data }: IArticlesDetailPageProps) => {
   const { image } = useImageFetch({ imageId: data.imageId });
 
   return (
-    <Layout>
-      <Seo templateTitle={data.title} description={data.perex} />
+    <Layout seoProps={{ templateTitle: data.title, description: data.perex }}>
       <div className='mb-16'>
-        <ArticleDetailContent data={data} image={image} />
+        <ArticleDetail data={data} image={image} />
       </div>
     </Layout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  ArticlesDetailPageProps,
-  { id: string }
-> = async ({ params }) => {
-  if (!params?.id) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const data = await fetchArticle(params?.id);
+export const getStaticPaths: GetStaticPaths = async () => {
+  const articles = await ArticlesAPI.listArticles();
+  const paths = articles.items.map((article) => ({
+    params: { id: article.articleId.toString() },
+  }));
 
   return {
-    props: {
-      data,
-    },
+    paths,
+    fallback: 'blocking',
   };
 };
 
-ArticlesDetailPage.displayName = 'ArticlesDetailPage';
+export const getStaticProps: GetStaticProps<
+  IArticlesDetailPageProps,
+  { id: string }
+> = async ({ params }) => {
+  try {
+    if (!params?.id) {
+      return { notFound: true };
+    }
+
+    const response = await ArticlesAPI.getArticleDetail(params.id);
+
+    if (!response) {
+      return { notFound: true };
+    }
+
+    return { props: { data: response }, revalidate: 60 };
+  } catch (error) {
+    return { notFound: true };
+  }
+};
 
 export default ArticlesDetailPage;

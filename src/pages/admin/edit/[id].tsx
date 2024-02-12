@@ -2,42 +2,41 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useGetArticle } from '@/hooks/useGetArticle';
-import useUpdateArticle from '@/hooks/useUpdateArticle';
+import { useGetArticleDetail, useUpdateArticle } from '@/hooks';
 
-import Input from '@/components/Input';
-import Seo from '@/components/Seo';
+import { Input } from '@/components';
 
-import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
-import Layout from '@/layout/Layout';
+import { withAuth, withAuthServerSideProps } from '@/hocs';
+import { Layout } from '@/layout';
 
-import { ArticleDetail } from '@/types/ArticleDetailType';
+import { ArticleDetailType } from '@/types';
 
 const ArticleEditPage = () => {
   const router = useRouter();
   const articleId = router.query.id;
-  const { data } = useGetArticle(articleId);
-  const { register, handleSubmit, setValue } = useForm();
+  const { data } = useGetArticleDetail(articleId);
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
     if (data) {
-      setValue('title', data.title);
-      setValue('perex', data.perex);
-      setValue('content', data.content);
+      reset({
+        title: data.title,
+        perex: data.perex,
+        content: data.content,
+      });
     }
-  }, [data, setValue]);
+  }, [data, reset]);
 
   const { handleUpdateArticle, status } = useUpdateArticle();
 
-  const onSumbit = async (formData: Partial<ArticleDetail>) => {
-    handleUpdateArticle(formData, articleId);
+  const onSubmit = async (formData: Partial<ArticleDetailType>) => {
+    await handleUpdateArticle(formData, articleId);
   };
 
   return (
-    <Layout>
-      <Seo templateTitle='Admin panel - Edit article' />
-      <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
-        <div className='mt-8 mb-4 flex flex-row items-center gap-8'>
+    <Layout seoProps={{ templateTitle: 'Admin panel - Edit article' }}>
+      <form className='max-w-3xl' onSubmit={handleSubmit(onSubmit)}>
+        <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Edit article</h1>
           <button
             type='submit'
@@ -76,6 +75,7 @@ const ArticleEditPage = () => {
           </div>
         </div>
       </form>
+      {status.loading && <div className='mt-6 text-blue-500'>Loading...</div>}
       {status.error && (
         <div className='mt-6 text-red-500'>
           There was an error while editing the article

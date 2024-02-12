@@ -1,24 +1,25 @@
 import Link from 'next/link';
-import * as React from 'react';
 import { RiAlarmWarningFill } from 'react-icons/ri';
 
-import Seo from '@/components/Seo';
+import { Layout } from '@/layout';
 
-import Layout from '@/layout/Layout';
-
-export default function NotFoundPage() {
+const NotFoundPage = () => {
   return (
-    <Layout>
-      <Seo templateTitle='Not Found' />
+    <Layout seoProps={{ templateTitle: 'Not Found' }}>
       <main>
-        <section className='bg-white'>
+        <section className='bg-white' aria-label='Page Not Found'>
           <div className='layout flex min-h-screen flex-col items-center justify-center text-center text-black'>
             <RiAlarmWarningFill
               size={60}
               className='drop-shadow-glow animate-flicker text-red-500'
+              aria-hidden='true'
             />
             <h1 className='mt-8 text-4xl md:text-6xl'>Page Not Found</h1>
-            <Link className='mt-4 md:text-lg' href='/'>
+            <Link
+              className='mt-4 md:text-lg'
+              href='/'
+              aria-label='Back to Home'
+            >
               Back to Home
             </Link>
           </div>
@@ -26,4 +27,6 @@ export default function NotFoundPage() {
       </main>
     </Layout>
   );
-}
+};
+
+export default NotFoundPage;

@@ -1,41 +1,64 @@
 import { GetServerSideProps } from 'next';
 
-import fetchArticles from '@/libs/fetchArticles';
+import { EmptyState, ErrorState, RecentArticles } from '@/components';
 
-import RecentArticles from '@/components/RecentArticles/RecentArticles';
-import Seo from '@/components/Seo';
+import { ArticlesAPI } from '@/api';
+import { Layout } from '@/layout';
 
-import Layout from '@/layout/Layout';
+import { Article } from '@/types';
 
-import { Article } from '@/types/ArticlesType';
-
-type HomePageProps = {
+interface IHomePageProps {
   data: Article[];
-};
+  isEmpty?: boolean;
+  error?: string;
+}
 
-const HomePage = ({ data }: HomePageProps) => {
+const HomePage = ({ data, isEmpty, error }: IHomePageProps) => {
   return (
-    <Layout>
-      <Seo templateTitle='Recent articles' />
+    <Layout seoProps={{ templateTitle: 'Recent articles' }}>
       <div className='my-16'>
-        <RecentArticles data={data} />
+        {isEmpty && !error && <EmptyState />}
+        {error && <ErrorState error={error} />}
+        {!isEmpty && !error && <RecentArticles data={data} />}
       </div>
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps<
-  HomePageProps
+  IHomePageProps
 > = async () => {
-  const data = await fetchArticles();
+  try {
+    const response = await ArticlesAPI.listArticles();
 
-  return {
-    props: {
-      data: data.items,
-    },
-  };
+    if (!response.items || response.items.length === 0) {
+      return {
+        props: {
+          data: [],
+          isEmpty: true,
+        },
+      };
+    }
+
+    return {
+      props: {
+        data: response.items,
+      },
+    };
+  } catch (error: unknown) {
+    let errorMessage = 'Failed to load articles.';
+
+    if (error instanceof Error) {
+      errorMessage = `Failed to load articles: ${error.message}`;
+    }
+
+    return {
+      props: {
+        data: [],
+        error: errorMessage,
+      },
+    };
+  }
 };
-
-HomePage.displayName = 'HomePage';
 
 export default HomePage;

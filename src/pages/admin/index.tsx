@@ -1,27 +1,27 @@
 import Link from 'next/link';
+import { useCallback } from 'react';
 
-import useDeleteArticle from '@/hooks/useDeleteArticle';
-import { useGetArticles } from '@/hooks/useGetArticles';
+import { useDeleteArticle, useGetArticlesList } from '@/hooks';
 
-import AdminArticlesTable from '@/components/AdminArticlesTable/AdminArticlesTable';
-import columns from '@/components/AdminArticlesTable/columns';
-import Seo from '@/components/Seo';
+import { AdminArticlesTable, columns } from '@/components';
 
-import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
-import Layout from '@/layout/Layout';
+import { withAuth, withAuthServerSideProps } from '@/hocs';
+import { Layout } from '@/layout';
 
 const Dashboard = () => {
-  const { data } = useGetArticles();
+  const { data } = useGetArticlesList();
 
-  const { status, deleteArticle } = useDeleteArticle();
+  const { status, handleDeleteArticle: deleteArticle } = useDeleteArticle();
 
-  const handleDeleteArticle = async (articleId: string) => {
-    deleteArticle(articleId);
-  };
+  const handleDeleteArticle = useCallback(
+    async (articleId: string) => {
+      await deleteArticle(articleId);
+    },
+    [deleteArticle]
+  );
 
   return (
-    <Layout>
-      <Seo templateTitle='Admin panel - My articles' />
+    <Layout seoProps={{ templateTitle: 'Admin panel - My articles' }}>
       <div className='my-8 flex flex-row items-center gap-8'>
         <h1 className='font-2xl font-medium'>My articles</h1>
         <Link
@@ -38,6 +38,7 @@ const Dashboard = () => {
           handleDeleteArticle={handleDeleteArticle}
         />
       ) : null}
+      {status.loading && <div className='mt-6 text-blue-500'>Loading...</div>}
       {status.error && (
         <div className='mt-6 text-red-500'>
           There was an error while deleting the article

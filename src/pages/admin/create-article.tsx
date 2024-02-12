@@ -1,33 +1,31 @@
 import { useForm } from 'react-hook-form';
 
-import usePostArticle from '@/hooks/usePostArticle';
+import { usePostArticle } from '@/hooks';
 
-import Input from '@/components/Input';
-import Seo from '@/components/Seo';
+import { Input } from '@/components';
 
-import { withAuth, withAuthServerSideProps } from '@/hocs/withAuth';
-import Layout from '@/layout/Layout';
+import { withAuth, withAuthServerSideProps } from '@/hocs';
+import { Layout } from '@/layout';
 
-type FormData = {
+interface FormData {
   title: string;
   content: string;
   perex: string;
   imageId: File;
-};
+}
 
 const CreateArticle = () => {
   const { handleSubmitArticle, status } = usePostArticle();
   const { register, handleSubmit } = useForm<FormData>();
 
-  const onSumbit = async (formData: FormData) => {
+  const onSubmit = async (formData: FormData) => {
     handleSubmitArticle(formData);
   };
 
   return (
-    <Layout>
-      <Seo templateTitle='Admin panel - New article' />
-      <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
-        <div className='mt-8 mb-4 flex flex-row items-center gap-8'>
+    <Layout seoProps={{ templateTitle: 'Admin panel - New article' }}>
+      <form className='max-w-3xl' onSubmit={handleSubmit(onSubmit)}>
+        <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Create new article</h1>
           <button
             type='submit'
