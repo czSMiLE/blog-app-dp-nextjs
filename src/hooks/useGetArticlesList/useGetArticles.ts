@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ArticlesAPI } from '@/api';
+import { ArticlesAPI, handleError } from '@/api';
 
 import { FetchAPIStatus } from '@/types';
 import { Article } from '@/types';
@@ -26,9 +26,9 @@ export const useGetArticlesList = () => {
         }
       } catch (error) {
         if (isMounted) {
+          handleError(error, 'Error while getting article');
           setStatus({ loading: false, error: true, success: false });
         }
-        throw new Error(`Error while fetching article: ${error}`);
       }
     };
 

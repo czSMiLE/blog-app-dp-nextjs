@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { API_ENDPOINTS, axiosInstance, ImageAPI } from '@/api';
+import { API_ENDPOINTS, axiosInstance, handleError, ImageAPI } from '@/api';
 import { ArticlesResponse } from '@/api/types';
 
 import { ArticleDetailType } from '@/types';
@@ -12,7 +12,8 @@ const listArticles = async () => {
     );
     return response.data;
   } catch (error) {
-    throw new Error(`Error listing articles: ${error}`);
+    handleError(error, 'Error listing articles');
+    return { items: [] };
   }
 };
 
@@ -23,7 +24,7 @@ const getArticleDetail = async (articleId: string) => {
     );
     return response.data;
   } catch (error) {
-    throw new Error(`Error getting article detail: ${error}`);
+    handleError(error, 'Error listing article detail');
   }
 };
 
@@ -42,7 +43,7 @@ const updateArticle = async (
       dataPayload
     );
   } catch (error) {
-    throw new Error(`Error while updating article ${error}`);
+    handleError(error, 'Error updating article');
   }
 };
 
@@ -50,7 +51,7 @@ const deleteArticle = async (articleId: string): Promise<void> => {
   try {
     await axiosInstance.delete(API_ENDPOINTS.articleDetail(articleId));
   } catch (error) {
-    throw new Error(`Error while deleting article ${error}`);
+    handleError(error, 'Error deleting article');
   }
 };
 
@@ -72,7 +73,7 @@ const createArticle = async (
 
     await axiosInstance.post(API_ENDPOINTS.articles, dataPayload);
   } catch (error) {
-    throw new Error(`Error creating article: ${error}`);
+    handleError(error, 'Error creating article');
   }
 };
 

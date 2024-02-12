@@ -13,7 +13,7 @@ const LoginPage = () => {
   const { handleLogIn, status } = useAuth();
   const { register, handleSubmit } = useForm<LoginData>();
 
-  const onSumbit = async (formData: LoginData) => {
+  const onSubmit = async (formData: LoginData) => {
     await handleLogIn(formData);
   };
 
@@ -24,7 +24,7 @@ const LoginPage = () => {
           <h1 className='text-3xl font-medium'>Log In</h1>
           <form
             className='mt-6 flex flex-col gap-2'
-            onSubmit={handleSubmit(onSumbit)}
+            onSubmit={handleSubmit(onSubmit)}
           >
             <Input
               label='Username'

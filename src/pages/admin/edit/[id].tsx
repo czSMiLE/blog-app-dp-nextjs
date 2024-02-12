@@ -15,25 +15,27 @@ const ArticleEditPage = () => {
   const router = useRouter();
   const articleId = router.query.id;
   const { data } = useGetArticleDetail(articleId);
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
     if (data) {
-      setValue('title', data.title);
-      setValue('perex', data.perex);
-      setValue('content', data.content);
+      reset({
+        title: data.title,
+        perex: data.perex,
+        content: data.content,
+      });
     }
-  }, [data, setValue]);
+  }, [data, reset]);
 
   const { handleUpdateArticle, status } = useUpdateArticle();
 
-  const onSumbit = async (formData: Partial<ArticleDetailType>) => {
+  const onSubmit = async (formData: Partial<ArticleDetailType>) => {
     await handleUpdateArticle(formData, articleId);
   };
 
   return (
     <Layout seoProps={{ templateTitle: 'Admin panel - Edit article' }}>
-      <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
+      <form className='max-w-3xl' onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Edit article</h1>
           <button

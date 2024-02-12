@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ArticlesAPI } from '@/api';
+import { ArticlesAPI, handleError } from '@/api';
 
 import { FetchAPIStatus } from '@/types';
 import { ArticleDetailType } from '@/types';
@@ -23,6 +23,7 @@ export const useUpdateArticle = () => {
       setStatus({ loading: false, success: true, error: false });
       return;
     } catch (error) {
+      handleError(error, 'Error while updating article');
       setStatus({ loading: false, success: false, error: true });
     }
   };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ArticlesAPI } from '@/api';
+import { ArticlesAPI, handleError } from '@/api';
 
 import { FetchAPIStatus } from '@/types';
 
@@ -23,6 +23,7 @@ export const usePostArticle = () => {
 
       setStatus({ loading: false, error: false, success: true });
     } catch (error) {
+      handleError(error, 'Error while posting article');
       setStatus({ loading: false, error: true, success: false });
     }
   };

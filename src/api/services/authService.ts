@@ -1,25 +1,35 @@
 import { destroyCookie, setCookie } from 'nookies';
 
-import { API_ENDPOINTS, AuthResponse, axiosInstance, LoginData } from '@/api';
+import {
+  API_ENDPOINTS,
+  AuthResponse,
+  axiosInstance,
+  handleError,
+  LoginData,
+} from '@/api';
 
-const login = async (data: LoginData): Promise<void> => {
+const login = async (data: LoginData): Promise<boolean> => {
   try {
     const response = await axiosInstance.post<AuthResponse>(
       API_ENDPOINTS.login,
       data
     );
-    const { access_token, expires_in } = response.data;
 
-    if (access_token) {
+    if (response.data && response.data.access_token) {
+      const { access_token, expires_in } = response.data;
       setCookie(null, 'access_token', access_token, {
         maxAge: expires_in,
         path: '/',
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
       });
+      return true;
+    } else {
+      return false;
     }
   } catch (error) {
-    throw new Error(`Login failed: ${error}`);
+    handleError(error, 'Login failed');
+    return false;
   }
 };
 

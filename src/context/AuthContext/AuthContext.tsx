@@ -23,14 +23,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const handleLogIn = async (formData: LoginData) => {
     setStatus({ loading: true, success: false, error: false });
-    try {
-      await AuthAPI.login(formData);
+    const loginSuccess = await AuthAPI.login(formData);
+    if (loginSuccess) {
       setUser({ username: formData.username });
       setStatus({ loading: false, success: true, error: false });
       router.push('/admin');
-    } catch (error) {
+    } else {
       setStatus({ loading: false, success: false, error: true });
-      throw new Error(`Login failed: ${error}`);
     }
   };
 

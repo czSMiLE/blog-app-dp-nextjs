@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ImageAPI } from '@/api';
+import { handleError, ImageAPI } from '@/api';
 
 import { FetchAPIStatus } from '@/types';
 
@@ -18,16 +18,16 @@ export const useImageFetch = ({ imageId }) => {
     const fetchAndSetImage = async () => {
       setStatus({ loading: true, error: false, success: false });
       try {
-        const imageDataUrl = await ImageAPI.fetchImage(imageId);
+        const imageDataUrl = (await ImageAPI.fetchImage(imageId)) as string;
         if (isMounted) {
           setImage(imageDataUrl);
           setStatus({ loading: false, error: false, success: true });
         }
       } catch (error) {
         if (isMounted) {
+          handleError(error, 'Error while getting image');
           setStatus({ loading: false, error: true, success: false });
         }
-        throw new Error(`Error fetching image: ${error}`);
       }
     };
 

@@ -7,24 +7,24 @@ import { Input } from '@/components';
 import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
 
-type FormData = {
+interface FormData {
   title: string;
   content: string;
   perex: string;
   imageId: File;
-};
+}
 
 const CreateArticle = () => {
   const { handleSubmitArticle, status } = usePostArticle();
   const { register, handleSubmit } = useForm<FormData>();
 
-  const onSumbit = async (formData: FormData) => {
+  const onSubmit = async (formData: FormData) => {
     handleSubmitArticle(formData);
   };
 
   return (
     <Layout seoProps={{ templateTitle: 'Admin panel - New article' }}>
-      <form className='max-w-3xl' onSubmit={handleSubmit(onSumbit)}>
+      <form className='max-w-3xl' onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-4 mt-8 flex flex-row items-center gap-8'>
           <h1 className='font-2xl font-medium'>Create new article</h1>
           <button

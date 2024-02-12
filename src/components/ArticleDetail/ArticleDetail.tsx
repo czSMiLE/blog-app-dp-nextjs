@@ -14,7 +14,7 @@ export const ArticleDetail: FC<IArticleDetailProps> = ({ data, image }) => {
       {image && (
         <Image
           src={`data:image/jpeg;base64,${image}`}
-          alt='Cat'
+          alt={data.title}
           width={460}
           height={220}
         />

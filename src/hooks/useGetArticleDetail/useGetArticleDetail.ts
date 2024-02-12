@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ArticlesAPI } from '@/api';
+import { ArticlesAPI, handleError } from '@/api';
 
 import { FetchAPIStatus } from '@/types';
 import { ArticleDetailType } from '@/types';
@@ -21,18 +21,18 @@ export const useGetArticleDetail = (
     const fetchData = async () => {
       setStatus({ loading: true, error: false, success: false });
       try {
-        const fetchedData = await ArticlesAPI.getArticleDetail(
+        const fetchedData = (await ArticlesAPI.getArticleDetail(
           articleId as string
-        );
+        )) as ArticleDetailType;
         if (isMounted) {
           setData(fetchedData);
           setStatus({ loading: false, error: false, success: true });
         }
       } catch (error) {
         if (isMounted) {
+          handleError(error, 'Error while getting articles');
           setStatus({ loading: false, error: true, success: false });
         }
-        throw new Error(`Error while fetching article: ${error}`);
       }
     };
 
