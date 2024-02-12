@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import usePostArticle from '@/hooks/usePostArticle';
+import { usePostArticle } from '@/hooks';
 
 import { Input } from '@/components';
 

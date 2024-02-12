@@ -2,11 +2,9 @@ import Link from 'next/link';
 import { FC } from 'react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
-import { useAuth } from '@/hooks';
+import { IHeaderLoggedInProps } from '@/layout';
 
-export const HeaderLoggedIn: FC = () => {
-  const { logOut } = useAuth();
-
+export const HeaderLoggedIn: FC<IHeaderLoggedInProps> = ({ logOut }) => {
   return (
     <div
       className='flex flex-row gap-10'

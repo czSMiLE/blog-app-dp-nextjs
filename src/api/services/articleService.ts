@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { API_ENDPOINTS, axiosInstance, uploadImage } from '@/api';
+import { API_ENDPOINTS, axiosInstance, ImageAPI } from '@/api';
 import { ArticlesResponse } from '@/api/types';
 
-import { ArticleDetail } from '@/types';
+import { ArticleDetailType } from '@/types';
 
-export const listArticles = async () => {
+const listArticles = async () => {
   try {
     const response = await axiosInstance.get<ArticlesResponse>(
       API_ENDPOINTS.articles
@@ -16,9 +16,9 @@ export const listArticles = async () => {
   }
 };
 
-export const getArticleDetail = async (articleId: string) => {
+const getArticleDetail = async (articleId: string) => {
   try {
-    const response = await axiosInstance.get<ArticleDetail>(
+    const response = await axiosInstance.get<ArticleDetailType>(
       API_ENDPOINTS.articleDetail(articleId)
     );
     return response.data;
@@ -27,9 +27,9 @@ export const getArticleDetail = async (articleId: string) => {
   }
 };
 
-export const updateArticle = async (
+const updateArticle = async (
   articleId: string | string[] | undefined,
-  articleData: Partial<ArticleDetail>
+  articleData: Partial<ArticleDetailType>
 ): Promise<void> => {
   const dataPayload = {
     ...articleData,
@@ -46,7 +46,7 @@ export const updateArticle = async (
   }
 };
 
-export const deleteArticle = async (articleId: string): Promise<void> => {
+const deleteArticle = async (articleId: string): Promise<void> => {
   try {
     await axiosInstance.delete(API_ENDPOINTS.articleDetail(articleId));
   } catch (error) {
@@ -54,16 +54,15 @@ export const deleteArticle = async (articleId: string): Promise<void> => {
   }
 };
 
-export const createArticle = async (
-  imageFormData: FormData,
-  articleData: Partial<ArticleDetail>
+const createArticle = async (
+  imageFile: File,
+  articleData: Partial<ArticleDetailType>
 ): Promise<void> => {
   try {
-    //console.log(imageFormData);
-    //console.log(articleData);
-    const imageId = await uploadImage(imageFormData);
+    const formData = new FormData();
+    formData.append('image', imageFile);
 
-    //console.log(imageId);
+    const imageId = await ImageAPI.uploadImage(formData);
 
     const dataPayload = {
       ...articleData,
@@ -75,4 +74,12 @@ export const createArticle = async (
   } catch (error) {
     throw new Error(`Error creating article: ${error}`);
   }
+};
+
+export const ArticlesAPI = {
+  listArticles,
+  getArticleDetail,
+  updateArticle,
+  deleteArticle,
+  createArticle,
 };

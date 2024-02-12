@@ -1,20 +1,17 @@
 import { ReactNode } from 'react';
 
+import { LoginData } from '@/api';
+
+import { FetchAPIStatus } from '@/types';
+
 export type AuthContextData = {
   user: User | null;
-  logIn: (formData: LoginType) => Promise<void>;
+  handleLogIn: (formData: LoginData) => Promise<void>;
   logOut: () => void;
-  error: boolean;
+  status: FetchAPIStatus;
   children?: ReactNode;
-};
-
-export type LoginType = {
-  username: string;
-  password: string;
 };
 
 export type User = {
   username: string;
 };
-
-export type AuthResponse = { access_token: string; expires_in: number };

@@ -1,14 +1,11 @@
 import Image from 'next/image';
 import { FC } from 'react';
 
-import { IArticleDetailContentProps } from '@/components';
+import { IArticleDetailProps } from '@/components';
 
 import { formatTime } from '@/utils';
 
-export const ArticleDetailContent: FC<IArticleDetailContentProps> = ({
-  data,
-  image,
-}) => {
+export const ArticleDetail: FC<IArticleDetailProps> = ({ data, image }) => {
   return (
     <>
       <h1 className='font-2xl mb-4 mt-8 font-medium'>{data.title}</h1>

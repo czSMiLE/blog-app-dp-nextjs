@@ -1,17 +1,10 @@
-import { UploadResponse } from '@/hooks';
+import { API_ENDPOINTS, axiosInstance, ImageUploadResponse } from '@/api';
 
-import { API_ENDPOINTS, axiosInstance } from '@/api';
-
-export const uploadImage = async (formData: FormData) => {
+const uploadImage = async (formData: FormData) => {
   try {
-    const response = await axiosInstance.post<UploadResponse>(
+    const response = await axiosInstance.post<ImageUploadResponse>(
       API_ENDPOINTS.images,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+      formData
     );
     const imageId = response.data[0].imageId;
     return imageId;
@@ -20,7 +13,7 @@ export const uploadImage = async (formData: FormData) => {
   }
 };
 
-export const fetchImage = async (imageId: string): Promise<string | null> => {
+const fetchImage = async (imageId: string): Promise<string | null> => {
   try {
     const response = await axiosInstance.get<ArrayBuffer>(
       API_ENDPOINTS.imageDetail(imageId),
@@ -31,4 +24,9 @@ export const fetchImage = async (imageId: string): Promise<string | null> => {
   } catch (error) {
     throw new Error(`Error fetching image: ${error}`);
   }
+};
+
+export const ImageAPI = {
+  uploadImage,
+  fetchImage,
 };

@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { destroyCookie, setCookie } from 'nookies';
 import { createContext, useState } from 'react';
 
-import api from '@/libs/api';
+import { AuthAPI, LoginData } from '@/api';
+import { AuthContextData, User } from '@/context';
 
-import { AuthContextData, AuthResponse, LoginType, User } from '@/context';
+import { FetchAPIStatus } from '@/types';
 
 export const AuthContext = createContext<AuthContextData>(
   {} as AuthContextData
@@ -14,43 +14,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState<boolean>(false);
+  const [status, setStatus] = useState<FetchAPIStatus>({
+    success: false,
+    loading: false,
+    error: false,
+  });
   const router = useRouter();
 
-  const logIn = async (formData: LoginType) => {
+  const handleLogIn = async (formData: LoginData) => {
+    setStatus({ loading: true, success: false, error: false });
     try {
-      const data = await api<AuthResponse>({
-        url: `${process.env.NEXT_PUBLIC_API_URL}/login`,
-        method: 'POST',
-        data: formData,
-      });
-      if (data.access_token) {
-        setCookie(null, 'access_token', data.access_token, {
-          maxAge: data.expires_in,
-          path: '/',
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'strict',
-        });
-        setUser({ username: formData.username });
-        router.push('/admin');
-      }
+      await AuthAPI.login(formData);
+      setUser({ username: formData.username });
+      setStatus({ loading: false, success: true, error: false });
+      router.push('/admin');
     } catch (error) {
-      setError(true);
+      setStatus({ loading: false, success: false, error: true });
+      throw new Error(`Login failed: ${error}`);
     }
   };
 
   const logOut = () => {
-    destroyCookie(null, 'access_token', {
-      path: '/',
-      secure: true,
-      sameSite: 'strict',
-    });
+    AuthAPI.logout();
     setUser(null);
     router.push('/');
   };
 
   return (
-    <AuthContext.Provider value={{ user, logIn, logOut, error }}>
+    <AuthContext.Provider value={{ user, handleLogIn, logOut, status }}>
       {children}
     </AuthContext.Provider>
   );

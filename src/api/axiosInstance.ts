@@ -9,7 +9,10 @@ axiosInstance.interceptors.request.use((config) => {
   const { access_token } = parseCookies();
 
   config.headers['X-API-KEY'] = process.env.NEXT_PUBLIC_TENANT_API_KEY;
-  config.headers['Content-Type'] = 'application/json';
+
+  if (!(config.data instanceof FormData)) {
+    config.headers['Content-Type'] = 'application/json';
+  }
 
   if (access_token) {
     config.headers['Authorization'] = `Bearer ${access_token}`;

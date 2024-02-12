@@ -4,12 +4,6 @@ import { parseCookies } from 'nookies';
 
 import { IWithAuthProps } from '@/hocs';
 
-/**
- * Higher-order component that redirects to the login page if the user is not authenticated.
- * @param Page The page to render if the user is authenticated.
- * @returns The wrapped page.
- */
-
 export const withAuth = (Page: React.ComponentType<any>) => {
   const WithAuth = ({ isAuth, ...pageProps }: IWithAuthProps) => {
     const router = useRouter();
@@ -44,7 +38,7 @@ export const withAuthServerSideProps = (
       };
     }
 
-    let pageProps: { [key: string]: any } = {};
+    let pageProps = {};
     if (getServerSidePropsFunc) {
       const serverSideProps = await getServerSidePropsFunc(context);
       if ('props' in serverSideProps) {

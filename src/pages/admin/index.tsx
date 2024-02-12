@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import { useCallback } from 'react';
 
-import useDeleteArticle from '@/hooks/useDeleteArticle';
-import { useGetArticles } from '@/hooks/useGetArticles';
+import { useDeleteArticle, useGetArticlesList } from '@/hooks';
 
 import { AdminArticlesTable, columns } from '@/components';
 
@@ -9,13 +9,16 @@ import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
 
 const Dashboard = () => {
-  const { data } = useGetArticles();
+  const { data } = useGetArticlesList();
 
-  const { status, deleteArticle } = useDeleteArticle();
+  const { status, handleDeleteArticle: deleteArticle } = useDeleteArticle();
 
-  const handleDeleteArticle = async (articleId: string) => {
-    deleteArticle(articleId);
-  };
+  const handleDeleteArticle = useCallback(
+    async (articleId: string) => {
+      await deleteArticle(articleId);
+    },
+    [deleteArticle]
+  );
 
   return (
     <Layout seoProps={{ templateTitle: 'Admin panel - My articles' }}>
@@ -35,6 +38,7 @@ const Dashboard = () => {
           handleDeleteArticle={handleDeleteArticle}
         />
       ) : null}
+      {status.loading && <div className='mt-6 text-blue-500'>Loading...</div>}
       {status.error && (
         <div className='mt-6 text-red-500'>
           There was an error while deleting the article

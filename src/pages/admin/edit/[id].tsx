@@ -2,20 +2,19 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useGetArticle } from '@/hooks/useGetArticle';
-import useUpdateArticle from '@/hooks/useUpdateArticle';
+import { useGetArticleDetail, useUpdateArticle } from '@/hooks';
 
 import { Input } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
 
-import { ArticleDetail } from '@/types/ArticleDetailType';
+import { ArticleDetailType } from '@/types';
 
 const ArticleEditPage = () => {
   const router = useRouter();
   const articleId = router.query.id;
-  const { data } = useGetArticle(articleId);
+  const { data } = useGetArticleDetail(articleId);
   const { register, handleSubmit, setValue } = useForm();
 
   useEffect(() => {
@@ -28,8 +27,8 @@ const ArticleEditPage = () => {
 
   const { handleUpdateArticle, status } = useUpdateArticle();
 
-  const onSumbit = async (formData: Partial<ArticleDetail>) => {
-    handleUpdateArticle(formData, articleId);
+  const onSumbit = async (formData: Partial<ArticleDetailType>) => {
+    await handleUpdateArticle(formData, articleId);
   };
 
   return (
@@ -74,6 +73,7 @@ const ArticleEditPage = () => {
           </div>
         </div>
       </form>
+      {status.loading && <div className='mt-6 text-blue-500'>Loading...</div>}
       {status.error && (
         <div className='mt-6 text-red-500'>
           There was an error while editing the article

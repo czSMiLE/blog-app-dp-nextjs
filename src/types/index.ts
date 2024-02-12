@@ -1,2 +1,2 @@
-export * from './ArticleDetailType';
-export * from './ArticlesType';
+export * from './ArticleType';
+export * from './FetchApiType';

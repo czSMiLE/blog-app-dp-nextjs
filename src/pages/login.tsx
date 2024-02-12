@@ -6,19 +6,15 @@ import { useAuth } from '@/hooks';
 
 import { Input } from '@/components';
 
+import { LoginData } from '@/api';
 import { Layout } from '@/layout';
 
-type FormData = {
-  username: string;
-  password: string;
-};
-
 const LoginPage = () => {
-  const { logIn, error } = useAuth();
-  const { register, handleSubmit } = useForm<FormData>();
+  const { handleLogIn, status } = useAuth();
+  const { register, handleSubmit } = useForm<LoginData>();
 
-  const onSumbit = async (formData: FormData) => {
-    logIn(formData);
+  const onSumbit = async (formData: LoginData) => {
+    await handleLogIn(formData);
   };
 
   return (
@@ -53,10 +49,17 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
-          {error && (
+
+          {status.loading && (
+            <div className='mt-6 text-blue-500'>Loading...</div>
+          )}
+          {status.error && (
             <div className='mt-6 text-red-500'>
-              Username or password is incorrect
+              Username or password is incorrect.
             </div>
+          )}
+          {status.success && (
+            <div className='mt-6 text-green-500'>Success! Logging you in.</div>
           )}
         </div>
       </main>
@@ -80,7 +83,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {},
   };
 };
-
-LoginPage.displayName = 'Login';
 
 export default LoginPage;
