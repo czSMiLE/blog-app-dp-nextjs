@@ -3,3 +3,4 @@ export * from './ArticleDetail';
 export * from './HomePage';
 export * from './Input';
 export * from './Seo';
+export * from './Skeleton';

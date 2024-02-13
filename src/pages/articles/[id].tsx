@@ -1,7 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 
-import { useImageFetch } from '@/hooks';
-
 import { ArticleDetail } from '@/components';
 
 import { ArticlesAPI } from '@/api';
@@ -14,12 +12,10 @@ interface IArticlesDetailPageProps {
 }
 
 const ArticlesDetailPage = ({ data }: IArticlesDetailPageProps) => {
-  const { image } = useImageFetch({ imageId: data.imageId });
-
   return (
     <Layout seoProps={{ templateTitle: data.title, description: data.perex }}>
       <div className='mb-16'>
-        <ArticleDetail data={data} image={image} />
+        <ArticleDetail data={data} />
       </div>
     </Layout>
   );

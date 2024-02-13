@@ -20,11 +20,11 @@ const uploadImage = async (formData: FormData) => {
 
 const fetchImage = async (imageId: string) => {
   try {
-    const response = await axiosInstance.get<ArrayBuffer>(
+    const response = await axiosInstance.get(
       API_ENDPOINTS.imageDetail(imageId),
-      { responseType: 'arraybuffer' }
+      { responseType: 'blob' }
     );
-    const imageDataUrl = Buffer.from(response.data).toString('base64');
+    const imageDataUrl = URL.createObjectURL(response.data);
     return imageDataUrl;
   } catch (error) {
     handleError(error, 'Error fetching image');
