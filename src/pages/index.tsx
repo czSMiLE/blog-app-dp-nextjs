@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 
 import { EmptyState, ErrorState, RecentArticles } from '@/components';
 
-import { ArticlesAPI } from '@/api';
+import { ArticlesAPI, handleError } from '@/api';
 import { Layout } from '@/layout';
 
 import { Article } from '@/types';
@@ -50,6 +50,7 @@ export const getServerSideProps: GetServerSideProps<
 
     if (error instanceof Error) {
       errorMessage = `Failed to load articles: ${error.message}`;
+      handleError(error.message, 'Failed to load articles');
     }
 
     return {

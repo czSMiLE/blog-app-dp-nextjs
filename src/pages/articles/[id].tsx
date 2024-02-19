@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 
 import { ArticleDetail } from '@/components';
 
-import { ArticlesAPI } from '@/api';
+import { ArticlesAPI, handleError } from '@/api';
 import { Layout } from '@/layout';
 
 import { ArticleDetailType } from '@/types';
@@ -49,7 +49,11 @@ export const getStaticProps: GetStaticProps<
     }
 
     return { props: { data: response }, revalidate: 60 };
-  } catch (error) {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      handleError(error.message, 'Failed to load article detail');
+    }
+
     return { notFound: true };
   }
 };
