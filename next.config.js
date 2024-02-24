@@ -9,6 +9,32 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   webpack: extendWebpackConfig,
+
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; connect-src 'self' https://fullstack.exercise.applifting.cz; object-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://fullstack.exercise.applifting.cz blob:; font-src 'self';",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 const sentryWebpackPluginOptions = {
