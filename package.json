@@ -1,6 +1,6 @@
 {
   "name": "blog-app-dp-nextjs",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,12 +13,18 @@
     "format": "prettier -w .",
     "format:check": "prettier -c .",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "version:major": "npm run version-bump major",
+    "version:minor": "npm run version-bump minor",
+    "version:patch": "npm run version-bump patch",
+    "version-bump": "node version-bump.js",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@sentry/nextjs": "^7.100.1",
     "axios": "^1.3.2",
-    "clsx": "^1.2.1",
+    "clsx": "^2.1.0",
     "next": "^13.1.6",
     "nookies": "^2.5.2",
     "react": "^18.2.0",
@@ -27,7 +33,8 @@
     "react-icons": "^4.7.1",
     "react-table": "^7.8.0",
     "tailwind-merge": "^2.2.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.6.1",
@@ -43,6 +50,7 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "autoprefixer": "^10.4.13",
+    "conventional-changelog-cli": "^4.1.0",
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.1.6",
     "eslint-config-prettier": "^8.6.0",
@@ -55,7 +63,9 @@
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.1.13",
+    "semver": "^7.5.4",
     "tailwindcss": "^3.2.6",
+    "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
   },
   "lint-staged": {

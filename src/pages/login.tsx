@@ -1,19 +1,22 @@
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import { useForm } from 'react-hook-form';
 
-import { useAuth } from '@/hooks';
+import { useAuth, useZodForm } from '@/hooks';
 
 import { Input } from '@/components';
 
-import { LoginData } from '@/api';
 import { Layout } from '@/layout';
+import { LoginFormData, loginSchema } from '@/validations';
 
 const LoginPage = () => {
   const { handleLogIn, status } = useAuth();
-  const { register, handleSubmit } = useForm<LoginData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useZodForm(loginSchema);
 
-  const onSubmit = async (formData: LoginData) => {
+  const onSubmit = async (formData: LoginFormData) => {
     await handleLogIn(formData);
   };
 
@@ -32,6 +35,7 @@ const LoginPage = () => {
               name='username'
               register={register}
               required
+              error={errors.username?.message}
             />
             <Input
               label='Password'
@@ -39,6 +43,7 @@ const LoginPage = () => {
               name='password'
               register={register}
               required
+              error={errors.password?.message}
             />
             <div>
               <button

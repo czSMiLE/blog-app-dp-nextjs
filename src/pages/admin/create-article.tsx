@@ -1,24 +1,21 @@
-import { useForm } from 'react-hook-form';
-
-import { usePostArticle } from '@/hooks';
+import { usePostArticle, useZodForm } from '@/hooks';
 
 import { Input } from '@/components';
 
 import { withAuth, withAuthServerSideProps } from '@/hocs';
 import { Layout } from '@/layout';
-
-interface FormData {
-  title: string;
-  content: string;
-  perex: string;
-  imageId: File;
-}
+import { cn } from '@/utils';
+import { CreateArticleFormData, createArticleSchema } from '@/validations';
 
 const CreateArticle = () => {
   const { handleSubmitArticle, status } = usePostArticle();
-  const { register, handleSubmit } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useZodForm(createArticleSchema);
 
-  const onSubmit = async (formData: FormData) => {
+  const onSubmit = async (formData: CreateArticleFormData) => {
     handleSubmitArticle(formData);
   };
 
@@ -43,6 +40,7 @@ const CreateArticle = () => {
             required
             className='p-4'
             placeholder='My First Article'
+            error={errors.title?.message?.toString()}
           />
           <Input
             label='Description'
@@ -52,6 +50,7 @@ const CreateArticle = () => {
             register={register}
             className='p-4'
             placeholder='Perex'
+            error={errors.perex?.message?.toString()}
           />
           <div className='flex w-36 flex-col gap-2'>
             <label
@@ -63,23 +62,33 @@ const CreateArticle = () => {
             <input
               type='file'
               hidden
-              {...register('imageId', {
-                required: true,
-              })}
+              {...register('imageId')}
               accept='image/png, image/jpeg'
               id='imageId'
             />
+            {errors.imageId && (
+              <p className='text-sm text-red-500'>
+                {errors.imageId.message?.toString()}
+              </p>
+            )}
           </div>
           <div className='flex flex-col gap-2'>
             <label htmlFor='content'>Content</label>
             <textarea
               id='content'
-              {...register('content', {
-                required: true,
-              })}
-              className='rounded border border-borderGrey p-4'
+              {...register('content')}
+              className={cn(
+                'rounded border',
+                errors.content ? 'border-red-500' : 'border-borderGrey',
+                'p-4'
+              )}
               placeholder='Enter content'
             ></textarea>
+            {errors.content && (
+              <p className='text-sm text-red-500'>
+                {errors.content.message?.toString()}
+              </p>
+            )}
           </div>
         </div>
       </form>

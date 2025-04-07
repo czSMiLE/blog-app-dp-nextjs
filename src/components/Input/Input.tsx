@@ -12,6 +12,7 @@ export const Input: FC<InputProps> = ({
   className,
   required,
   placeholder,
+  error,
 }) => {
   return (
     <div className='flex flex-col gap-2'>
@@ -19,7 +20,8 @@ export const Input: FC<InputProps> = ({
       <input
         id={name}
         className={cn(
-          'rounded border border-solid border-borderGrey',
+          'rounded border border-solid',
+          error ? 'border-red-500' : 'border-borderGrey',
           className
         )}
         type={type}
@@ -27,6 +29,7 @@ export const Input: FC<InputProps> = ({
         aria-required={required ? true : undefined}
         {...register(name, { required })}
       />
+      {error && <p className='text-sm text-red-500'>{error}</p>}
     </div>
   );
 };
